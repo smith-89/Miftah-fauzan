@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Miftah Fauzan</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <style>
+            /* General Styles */
+            :root {
+                --primary-color: #090;
+                --secondary-color: #6c757d;
+                --dark-color: #212529;
+                --light-color: #f8f9fa;
+                --success-color: #198754;
+                --danger-color: #dc3545;
+                --warning-color: #ffc107;
+                --info-color: #0dcaf0;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                color: #333;
+                line-height: 1.6;
+                padding-top: 56px;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-weight: 700;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--primary-color);
+                transition: all 0.3s ease;
+            }
+
+            a:hover {
+                color: #09e0ff;
+            }
+
+            /* Loading Screen */
+            .loading-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: var(--dark-color);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.5s ease;
+            }
+
+            .loading-screen p {
+                color: white;
+                margin-top: 20px;
+                font-size: 1.2rem;
+            }
+
+            /* Navigation */
+            .navbar {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-brand {
+                font-weight: 700;
+                font-size: 1.5rem;
+            }
+
+            .nav-link {
+                font-weight: 500;
+                padding: 0.5rem 1rem;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                padding: 100px 0;
+                background: linear-gradient(100deg, #c6f2fd 0%, #00cfd8 100%);
+                color: black;
+            }
+
+            .profile-img {
+                width: 350px;
+                height: 350px;
+                object-fit: cover;
+                border: 5px solid white;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                animation: float 3s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
+                100% {
+                    transform: translateY(0px);
+                }
+            }
+
+            /* About Section */
+            .skill-item .progress {
+                height: 10px;
+            }
+
+            .timeline {
+                position: relative;
+                padding-left: 50px;
+            }
+
+            .timeline::before {
+                content: "";
+                position: absolute;
+                left: 15px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: var(--primary-color);
+            }
+
+            .timeline-item {
+                position: relative;
+                margin-bottom: 30px;
+            }
+
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -50px;
+                top: 5px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: white;
+                border: 3px solid var(--primary-color);
+            }
+
+            .timeline-date {
+                font-weight: 600;
+                color: var(--primary-color);
+                margin-bottom: 5px;
+            }
+
+            .timeline-content h4 {
+                margin-bottom: 5px;
+            }
+
+            .timeline-content h5 {
+                color: var(--secondary-color);
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            /* Portfolio Section */
+            .portfolio-item {
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease;
+                height: 100%;
+            }
+
+            .portfolio-item:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .portfolio-item .card-img-top {
+                height: 200px;
+                object-fit: cover;
+            }
+
+            /* Comments Section */
+            #disqus_thread {
+                margin-top: 50px;
+            }
+
+            /* Contact Section */
+            .card {
+                transition: transform 0.3s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            /* Footer */
+            footer {
+                box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Back to Top Button */
+            .back-to-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .back-to-top.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Animations */
+            .fade-in {
+                animation: fadeIn 1s ease-in;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Animation Classes */
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.6s ease-out;
+            }
+
+            .animate-on-scroll.animated {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .delay-1 {
+                transition-delay: 0.2s;
+            }
+
+            .delay-2 {
+                transition-delay: 0.4s;
+            }
+
+            .delay-3 {
+                transition-delay: 0.6s;
+            }
+
+            .delay-4 {
+                transition-delay: 0.8s;
+            }
+
+            /* Bounce Animation */
+            @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-30px);
+                }
+                60% {
+                    transform: translateY(-15px);
+                }
+            }
+
+            .bounce {
+                animation: bounce 2s infinite;
+            }
+
+            /* Pulse Animation */
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            .pulse {
+                animation: pulse 2s infinite;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 992px) {
+                .hero-section {
+                    padding: 80px 0;
+                    text-align: center;
+                }
+
+                .profile-img {
+                    width: 250px;
+                    height: 250px;
+                    margin-top: 30px;
+                }
+
+                .hero-section .btn {
+                    display: block;
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                .social-icons {
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    padding-top: 56px;
+                }
+
+                .hero-section {
+                    padding: 60px 0;
+                }
+
+                .profile-img {
+                    width: 200px;
+                    height: 200px;
+                }
+
+                .timeline {
+                    padding-left: 30px;
+                }
+
+                .timeline-item::before {
+                    left: -30px;
+                }
+            }
+            .fab {
+                padding-bottom: 5px;
+            }
+            .klik {
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                color: white;
+                background: #00d310;
+                height: 35px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Loading Screen -->
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">smith 👾 </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#portfolio">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-4 fw-bold mb-4">
+                            Hi, I'm
+                            <span class="text-primary">Miftah Fauzan </span>
+                        </h1>
+                        <p class="lead mb-4">Software engineer in the future</p>
+                        <div class="social-icons mb-4">
+                            <a
+                                href="https://github.com/smith-89"
+                                class="text-white me-3"
+                                ><i class="fab fa-github fa-2x"></i
+                            ></a>
+                            <a href="#" class="text-white me-3"
+                                ><i class="fab fa-linkedin fa-2x"></i
+                            ></a>
+                            <a
+                                href="https://www.instagram.com/eserzet_89?igsh=MWVvNDJpaXVmNTRkOA=="
+                                class="text-white me-3"
+                                ><i class="fab fa-instagram fa-2x"></i
+                            ></a>
+                            <a
+                                href="https://wa.me/6285659611760"
+                                class="text-white me-3"
+                                ><i class="fab fa-whatsapp fa-2x"></i
+                            ></a>
+                        </div>
+                        <a href="#portfolio" class="btn btn-primary btn-lg me-2"
+                            >View my porfolio</a
+                        >
+                        <a
+                            href="https://wa.me/6285659611760/?text=Halo %20Mif Tamvan, %20 aku dari website kamu,%20salken ya 	&#128511; "
+                            class="btn btn-outline-light btn-lg"
+                            >Hubungi saya</a
+                        >
+                    </div>
+                    <div class="col-lg-6">
+                        <img
+                            src="https://files.catbox.moe/wgwzao.jpg"
+                            alt="Profile Photo"
+                            class="img-fluid rounded-circle profile-img"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">About Me</h2>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">Bio</h3>
+                        <p>
+                            --- Tentang Saya Halo! Saya Miftah Fauzan, siswa
+                            kelas XI MIPA 2 di SMA Informatika Nurul Bayan.
+                            Lahir pada 21 November 2008, saya memiliki minat
+                            besar di bidang teknologi, informatika, dan
+                            pemrograman. Bagi saya, belajar bukan sekadar
+                            kewajiban, tapi juga jalan untuk mewujudkan mimpi
+                            besar. --- Visi Menjadi pribadi yang berilmu,
+                            berakhlak baik, dan bermanfaat bagi banyak orang
+                            melalui ilmu teknologi dan pendidikan. --- Misi
+                            Mengembangkan keterampilan di bidang informatika dan
+                            teknologi secara konsisten. Terus belajar dan
+                            beradaptasi dengan perkembangan zaman. Membantu
+                            orang lain melalui karya dan pengetahuan. Menjaga
+                            sikap disiplin, tanggung jawab, dan kerja sama dalam
+                            setiap kesempatan. --- Motivasi Hidup > “Kesuksesan
+                            bukanlah milik orang pintar, tetapi milik mereka
+                            yang mau berusaha dan tidak pernah menyerah.” Saya
+                            percaya bahwa setiap langkah kecil hari ini akan
+                            menjadi pijakan besar untuk masa depan. Dengan
+                            tekad, kerja keras, dan doa, tidak ada mimpi yang
+                            mustahil untuk diraih. ---
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">Skills</h3>
+                        <div class="skill-item mb-3">
+                            <h6>HTML/CSS</h6>
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    role="progressbar"
+                                    style="width: 95%"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <h6>Python</h6>
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    role="progressbar"
+                                    style="width: 85%"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <h6>JavaScript</h6>
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    role="progressbar"
+                                    style="width: 80%"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <h6>c++</h6>
+                            <div class="progress">
+                                <div
+                                    class="progress-bar"
+                                    role="progressbar"
+                                    style="width: 75%"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h3 class="mb-4">pendidikan</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">2024- 2025</div>
+                                <div class="timeline-content">
+                                    <h4>Sekolah menengah atas</h4>
+                                    <h5>sma informatika nurul bayan</h5>
+                                    <p>study at nuba informatic high schol</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2021- 2024</div>
+                                <div class="timeline-content">
+                                    <h4>Sekolah menengah pertama</h4>
+                                    <h5>SMP+ nuba</h5>
+                                    <p>sekolah di smp plus nuba</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2015- 2021</div>
+                                <div class="timeline-content">
+                                    <h4>Sekolah dasar</h4>
+                                    <h5>SD N 2 legokjawa</h5>
+                                    <p>study at sdn2 legokjawa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">My Portfolio</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card portfolio-item">
+                            <img
+                                src="https://files.catbox.moe/5c57d5.png"
+                                class=""
+                                alt="Project 1"
+                            />
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Pelajar SMA INFORMATIKA NURUL BAYAN
+                                </h5>
+                                <p class="card-text">
+                                    Ponpes Nurul bayan cimerak pangandaran
+                                </p>
+                                <button onclick="showAlert()" class="klik">
+                                    KLIK DI SINI 😚
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card portfolio-item">
+                            <img
+                                src="https://files.catbox.moe/ahmets.jpg"
+                                class="card-img-top"
+                                alt="Project 2"
+                            />
+                            <div class="card-body">
+                                <h5 class="card-title">software engineer</h5>
+                                <p class="card-text">
+                                    software engineer to make mobile
+                                    application.
+                                </p>
+                                <a href="#" class="btn btn-primary"
+                                    >View Project</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card portfolio-item">
+                            <img
+                                src="https://files.catbox.moe/cu7owc.jpg"
+                                class="card-img-top"
+                                alt="Project 3"
+                            />
+                            <div class="card-body">
+                                <h5 class="card-title">
+                              Project bot whatsApp (AI) </h5>
+                                <p height= 100>
+                                    sedang mempelajari bot whatsApp atau AI menggunakan JavaScript
+                                    dan ingin membuatnya sendiri
+                                </p>
+                                <a href="#" class="btn btn-primary"
+                                    >View Project</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-outline-primary"
+                        >View All Projects</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section id="comments" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Feedback & Comments</h2>
+
+                <!-- Comment Form -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Leave a Comment</h4>
+                                <form
+                                    id="commentForm"
+                                    class="needs-validation"
+                                    novalidate
+                                >
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label"
+                                            >Name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="name"
+                                            required
+                                        />
+                                        <div class="invalid-feedback">
+                                            Please provide your name.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label"
+                                            >Email</label
+                                        >
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            required
+                                        />
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="comment" class="form-label"
+                                            >Comment</label
+                                        >
+                                        <textarea
+                                            class="form-control"
+                                            id="comment"
+                                            rows="3"
+                                            required
+                                        ></textarea>
+                                        <div class="invalid-feedback">
+                                            Please write your comment.
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                    >
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Local Comments Display -->
+                <div
+                    id="local-comments"
+                    class="row justify-content-center"
+                ></div>
+
+                <!-- Disqus Comments Integration -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div id="disqus_thread"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Get In Touch</h2>
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i
+                                    class="fas fa-envelope fa-3x mb-3 text-primary"
+                                ></i>
+                                <h4 class="card-title">Email Me</h4>
+                                <p class="card-text">
+                                    Miftahfauzanka2@gmail.com
+                                </p>
+                                <a
+                                    href="mailto:Miftahfauzanka2@gmail.com"
+                                    class="btn btn-primary"
+                                    >Send Email</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i
+                                    class="fas fa-phone fa-3x mb-3 text-primary"
+                                ></i>
+                                <h4 class="card-title">Call Me</h4>
+                                <p class="card-text">+86 961-456-7890</p>
+                                <a href="tel:+9999" class="btn btn-primary"
+                                    >Call Now</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Share Buttons -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <h4 class="mb-4">Share My Portfolio</h4>
+                        <div class="social-share">
+                            <a
+                                href="#"
+                                class="btn btn-outline-primary me-2 share-twitter"
+                                ><i class="fab fa-twitter me-2"></i>Twitter</a
+                            >
+                            <a
+                                href="#"
+                                class="btn btn-outline-primary me-2 share-facebook"
+                                ><i class="fab fa-facebook me-2"></i>Facebook</a
+                            >
+                            <a
+                                href="#"
+                                class="btn btn-outline-primary me-2 share-linkedin"
+                                ><i class="fab fa-linkedin me-2"></i>LinkedIn</a
+                            >
+                            <a
+                                href="#"
+                                class="btn btn-outline-primary share-whatsapp"
+                                ><i class="fab fa-whatsapp me-2"></i>WhatsApp</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white px-5 py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2025 SmithTamvan. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="text-white me-3"
+                            ><i class="fab fa-github"></i
+                        ></a>
+                        <a href="#" class="text-white me-3"
+                            ><i class="fab fa-linkedin"></i
+                        ></a>
+                        <a href="#" class="text-white me-3"
+                            ><i class="fab fa-instagram"></i
+                        ></a>
+                        <a href="#" class="text-white"
+                            ><i class="fab fa-whatsapp"></i
+                        ></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Back to Top Button -->
+        <a href="#" class="btn btn-primary back-to-top"
+            ><i class="fas fa-arrow-up"></i
+        ></a>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- GSAP Animation Library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+        <script>
+          
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("DOM loaded"); // Debugging
+
+  // you know smithh??
+  setTimeout(function() {
+    var loadingScreen = document.querySelector('.loading-screen');
+    if (loadingScreen) {
+      loadingScreen.style.opacity = '0';
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }
+  },
+    1000);
+       //AYO DONG SAINGIN LAGI 🤭///
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = this.getAttribute('href');
+
+
+      if (targetId === "#" || targetId === "#portfolio") {
+        var portfolioSection = document.getElementById('portfolio');
+        if (portfolioSection) {
+          window.scrollTo({
+            top: portfolioSection.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        }
+        return;
+      }
+
+      // Handle anchor link biasa
+      var targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 70,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // 3. Sistem komentar sederhana (tanpa localStorage)
+  var comments = []; // Simpan komentar dalam array
+
+  var commentForm = document.getElementById('commentForm');
+  if (commentForm) {
+    commentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var commentText = document.getElementById('comment').value;
+
+      if (name && commentText) {
+        // Tambahkan komentar ke array
+        comments.unshift({
+          name: name,
+          email: email,
+          comment: commentText,
+          date: new Date().toLocaleString()
+        });
+
+        // Tampilkan komentar
+        displayComments();
+
+        // Reset form
+        commentForm.reset();
+
+        // Tampilkan pesan sukses
+        alert("Komentar berhasil dikirim!");
+      } else {
+        alert("Harap isi nama dan komentar!");
+      }
+    });
+  }
+
+  // Fungsi untuk menampilkan komentar
+  function displayComments() {
+    var container = document.getElementById('local-comments');
+    if (!container) return;
+
+    container.innerHTML = '<h4>Komentar Terakhir:</h4>';
+
+    comments.forEach(function(comment) {
+      var commentDiv = document.createElement('div');
+      commentDiv.className = 'card mb-3';
+      commentDiv.innerHTML = `
+      <div class="card-body">
+      <h5 class="card-title">${comment.name}
+      <small class="text-muted">${comment.date}</small>
+      </h5>
+      <p class="card-text">${comment.comment}</p>
+      ${comment.email ? `<a href="mailto:${comment.email}" class="card-link">${comment.email}</a>`: ''}
+      </div>
+      `;
+      container.appendChild(commentDiv);
+    });
+  }
+
+  // 4. Back to top button sederhana
+  var backToTopButton = document.querySelector('.back-to-top');
+  if (backToTopButton) {
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('active');
+      } else {
+        backToTopButton.classList.remove('active');
+      }
+    });
+
+    backToTopButton.addEventListener('click',
+      function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+  }
+});
+function showAlert() {
+  alert (`SEMUA DATA PRIBADI ANDA, AKUN MEDSOS, SALDO, SUDAH DI  AMBIL ☠️
+    HACKED BY:
+    ==================
+    @SmithTamvan
+    ==================
+    _______  __   __  ___   _______  __   __
+    |       ||  |_|  ||   | |       ||  | |  |
+    |  _____||       ||   | |_     _||  |_|  |
+    | |_____ |       ||   |   |   |  |       |
+    |_____  ||       ||   |   |   |  |       |
+    _____| || ||_|| ||   |   |   |  |   _   |
+    |_______||_|   |_||___|   |___|  |__| |__|`)
+};
+
+// Nonaktifkan Disqus karena mungkin tidak bekerja di ACode
+/*
+    var disqus_config = function () {
+    this.page.url = 'YOUR_SITE_URL';
+    this.page.identifier = 'portfolio_page';
+    };
+    */
+        </script>
+    </body>
+</html>
